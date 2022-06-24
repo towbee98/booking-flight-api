@@ -10,6 +10,14 @@ app.use(json());
 
 app.use("/", routes);
 
+app.use((err,req,res,next)=>{
+  err.statusCode= err.statuscode || 500;
+  res.status(err.statusCode).json({
+    err,
+    message:err.message,
+  })
+})
+
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
